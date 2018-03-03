@@ -1,0 +1,9 @@
+{% extends "Base.html" %}
+
+{% block content %}
+    {% for student in students %}
+        {{ student.exp }}
+        {{ student.dni }}
+        {{ student.facultad }}
+    {% endfor %}
+{% endblock %}
