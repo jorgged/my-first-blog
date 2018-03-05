@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from .models import Facultad, Student, Teacher, Course
-from .forms import NewStudentForm, LoginForm, NewUserForm, NewFacultadForm
+from .forms import NewStudentForm, LoginForm, NewUserForm, NewFacultadForm, NewCourseForm, NewTeacherForm
 
 
 def Home(request):
@@ -28,7 +28,7 @@ def NewUser(request):
         form = NewUserForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('core:new_student')
+            return redirect('core:home')
     else:
         new_user_form = NewUserForm()
         ctx = {'new_user_form': new_user_form}
@@ -69,3 +69,27 @@ def LoginUser(request):
         next = request.GET
         ctx = {'form': form, 'mensaje': mensaje, 'next': next}
         return render(request, 'student/LoginStudent.html', ctx)
+
+
+def NewCourse(request):
+    if request.method=='POST':
+        form = NewCourseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('core:home')
+    else:
+        form = NewCourseForm()
+        ctx = {'form':form}
+    return render(request,'student/NewCourse.html',ctx)
+
+
+def NewTeacher(request):
+    if request.method=='POST':
+        form = NewTeacherForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('core:home')
+    else:
+        form = NewTeacherForm()
+        ctx = {'form':form}
+    return render(request,'student/NewCourse.html',ctx)

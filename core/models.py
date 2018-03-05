@@ -14,12 +14,14 @@ class Student(models.Model):
     exp = models.OneToOneField(User,models.SET_NULL, blank=True, null=True,)
     facultad = models.ForeignKey(Facultad, models.SET_NULL, blank=True, null=True,)
     dni = models.CharField(max_length=100)
-
+    def __str__(self):
+        return self.dni
 
 class Teacher(models.Model):
     exp = models.OneToOneField(User,models.SET_NULL, blank=True, null=True,)
     dni = models.CharField(max_length=100)
-
+    def __str__(self):
+        return self.dni
 
 class Course(models.Model):
     code = models.CharField(max_length=100)

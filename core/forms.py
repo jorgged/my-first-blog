@@ -8,6 +8,20 @@ class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput())
     password = forms.CharField(widget=forms.PasswordInput())
 
+
+class NewTeacherForm(forms.ModelForm):
+    class Meta:
+        model = Teacher
+        fields = '__all__'
+
+
+
+class NewCourseForm(forms.ModelForm):
+    class Meta:
+        model = Course
+        fields = '__all__'
+
+
 class NewFacultadForm(forms.ModelForm):
     class Meta:
         model = Facultad
