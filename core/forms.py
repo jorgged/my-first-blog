@@ -1,6 +1,6 @@
 from django import forms
 from django.forms.widgets import TextInput, PasswordInput
-from .models import Student, Teacher, Facultad, Course
+from .models import Student, Teacher, Course
 from django.contrib.auth.models import User
 
 
@@ -19,12 +19,6 @@ class NewTeacherForm(forms.ModelForm):
 class NewCourseForm(forms.ModelForm):
     class Meta:
         model = Course
-        fields = '__all__'
-
-
-class NewFacultadForm(forms.ModelForm):
-    class Meta:
-        model = Facultad
         fields = '__all__'
 
 

@@ -1,26 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from .models import Facultad, Student, Teacher, Course
-from .forms import NewStudentForm, LoginForm, NewUserForm, NewFacultadForm, NewCourseForm, NewTeacherForm
+from .models import Student, Teacher, Course
+from .forms import NewStudentForm, LoginForm, NewUserForm, NewCourseForm, NewTeacherForm
 
 
 def Home(request):
     students = Student.objects.all()
     ctx = {'students': students}
     return render(request, 'student/Home.html', ctx)
-
-
-def NewFacultad(request):
-    if request.method == 'POST':
-        form = NewFacultadForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('core:home')
-    else:
-        new_facultad = NewFacultadForm()
-        ctx = {'new_facultad': new_facultad}
-    return render(request, 'student/NewFacultad.html', ctx)
 
 
 def NewUser(request):
