@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core.apps.CoreConfig',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -118,5 +119,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-
+AUTH_USER_MODEL = 'core.Person'
+AUTHENTICATION_BACKENDS = ('core.Backend.UserAuthentificacionBackend',)
 STATIC_URL = '/static/'

@@ -1,21 +1,16 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
-class Person(models.Model):
-    exp = models.CharField(max_length=30)  # username para el login
-    name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    email = models.EmailField()
-    date_joined = models.DateField(auto_now_add=True)
-    last_login = models.DateField(auto_now=True)
-    password = models.CharField(max_length=100)
+
+class Person(AbstractUser):
     adress = models.CharField(max_length=100)
     cellphone = models.IntegerField()
     phone = models.IntegerField()
     dni = models.CharField(max_length=100)
 
     # photo = models.ImageField() aun no lo configuro para despues
-    is_active = models.BooleanField()
+
 
     student = 'student'
     teacher = 'teacher'
@@ -25,8 +20,6 @@ class Person(models.Model):
     )
     type_user = models.CharField(max_length=30, choices=type_user_options)
 
-    def __str__(self):
-        return self.name, self.last_name
 
 
 class Teacher(models.Model):
@@ -61,6 +54,7 @@ class Student(models.Model):
     cellphone = models.IntegerField()
     phone = models.IntegerField()
     dni = models.CharField(max_length=100)
+    career = models.CharField(max_length=500)
 
     # photo = models.ImageField() aun no lo configuro para despues
     is_active = models.BooleanField()
@@ -74,7 +68,8 @@ class Course(models.Model):
     name = models.CharField(max_length=500)
 
     def __str__(self):
-        return self.code
+        texto = self.code+'_'+ self.name
+        return texto
 
 
 class Seccion(models.Model):

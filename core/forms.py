@@ -1,7 +1,6 @@
 from django import forms
-from django.forms.widgets import TextInput, PasswordInput
-from .models import Student, Teacher, Course
-from django.contrib.auth.models import User
+from django.forms import PasswordInput, TextInput
+from .models import Student, Teacher, Course, Seccion, Person
 
 
 class LoginForm(forms.Form):
@@ -22,13 +21,26 @@ class NewCourseForm(forms.ModelForm):
         fields = '__all__'
 
 
-class NewUserForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['username','first_name','last_name','email','password']
-
 
 class NewStudentForm(forms.ModelForm):
     class Meta:
-        model = Student
+        model = Person
+        fields = ['first_name','last_name','email','adress','cellphone','phone','dni']
+        #exclude = ['is_superuser','is_staff','date_joined','type_user','user_permissions','groups','last_login']
+        widgets = {
+            'cellphone': TextInput(),
+            'phone': TextInput(),
+            'password': PasswordInput(render_value=False),
+        }
+        labels = {
+            'password': 'Clave',
+        }
+        help_texts = {
+            'password': 'Aqui va la clave',
+        }
+
+
+class NewSeccionForm(forms.ModelForm):
+    class Meta:
+        model = Seccion
         fields = '__all__'
