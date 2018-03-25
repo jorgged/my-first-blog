@@ -1,0 +1,157 @@
+
+def NewTeacher(request):
+    if request.method == 'POST':
+        form = NewTeacherForm(request.POST)
+        if form.is_valid():
+            teacher = form.save(commit=False)
+            teacher.username = 'iec' + teacher.dni
+            teacher.type_user = 'teacher'
+            teacher.set_password(teacher.dni)
+            teacher.save()
+            return redirect('core:home')
+    else:
+        form = NewTeacherForm()
+        ctx = {'form': form}
+    return render(request, 'student/NewCourse.html', ctx)
+
+
+    mensaje = ''
+    if request.user.is_authenticated:
+        return redirect('core:home')
+    else:
+        if request.method == 'POST':
+            next = request.POST
+            form = LoginForm(request.POST)
+            if form.is_valid():
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+                usuario = authenticate(username=username, password=password)
+                if usuario is not None and usuario.is_active:
+                    login(request, usuario)
+                    return redirect('core:home')
+                else:
+                    mensaje = "Usuario o Password incorrectos!"
+        form = LoginForm()
+        teacher = Teacher.objects.all()
+        ctx = {'form': form, 'mensaje': mensaje, 'teacher': teacher}
+        return render(request, 'Login.html', ctx)
+
+
+
+
+
+<select id="select_dropdown">
+<option value='joshua'>joshua</option>
+<option value='peter'>peter</option>
+</select>
+
+<script>
+    $(document).ready(function(){
+        $('#select_dropdown').change(function(){
+            var e = document.getElementById("select_dropdown");
+            var value = e.options[e.selectedIndex].value;
+            $.ajax({
+            url: "{% url 'core:lista' %}",
+            type: "get", // or "post"
+            data: value,
+            success: function(data) {
+                alert(data.result);
+            }});
+        });
+    });
+</script>
+
+
+
+
+
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#exampleModal">
+      Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Profesores</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <input type="text" name="buscador" id="buscar">
+              <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Exp</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Apellido</th>
+                </tr>
+              </thead>
+              <tbody id="lista">
+                <tr>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                </tr>
+                <tr>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td>@fat</td>
+                </tr>
+                <tr>
+                  <td>Larry</td>
+                  <td>the Bird</td>
+                  <td>@twitter</td>
+                </tr>
+              </tbody>
+            </table>
+              <div id="resultados"></div>
+              <script>
+                  $('#buscar').focus;
+                  $('#buscar').keyup(function(e){
+                      consulta = $("#buscar").val().trim();
+                      $.ajax({
+                          data: {'consulta': consulta},
+                          url: '{% url 'core:listaT' %}',
+                          type: 'get',
+                          success : function(data) {
+                              $("#lista").empty();
+                              for (i=0;i<data.length;i++){
+                                  var d1 = $("<p></p>").text("Text.");
+                                  $("#lista").append("<tr><td>" + data[i].exp + "</td><td>" + data[i].first_name + "</td><td>" + data[i].last_name + "</td></tr>");
+                              }
+                          },
+                      });
+                  });
+              </script>
+          </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+def list_student(request):
+  #  if request.POST(): #os request.GET()
+        get_value= request.body
+        # Do your logic here coz you got data in `get_value`
+        data = {}
+        data['result'] = 'you made a request'
+        return JsonResponse(data, safe=False)
+
+def teacher_list(request):
+    #if request.is_ajax():
+        teachers = Person.objects.filter(first_name__contains = request.GET['consulta'])
+        #teachers = Person.objects.all()
+        l = [{'first_name': t.first_name,'exp':t.username,'last_name':t.last_name} for t in teachers]
+
+        return JsonResponse(l,safe=False)
+    #else:
+     #   return JsonResponse('vacio',safe=False)

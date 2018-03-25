@@ -1,5 +1,8 @@
-
 {% extends "Base.html" %}
+
+
+
+
 
 {% block content %}
     <form method="post">
@@ -7,4 +10,26 @@
         {{ form.as_p }}
         <button type="submit" >Agregar</button>
     </form>
+                  <script>
+                  $('#buscar').keyup(function(e){
+                      consulta = $("#buscar").val().trim();
+                      $.ajax({
+                          data: {'consulta': consulta},
+                          url: '{% url 'core:listaT' %}',
+                          type: 'get',
+                          success : function(data) {
+                              $("#lista").empty();
+                              for (i=0;i<data.length;i++){
+                                  var d1 = $("<p></p>").text("Text.");
+                                  $("#lista").append("<tr><td>" + data[i].exp + "</td><td>" + data[i].first_name + "</td><td>" + data[i].last_name + "</td></tr>");
+                              }
+                          },
+                      });
+                  });
+              </script>
+
+
+
+
+
 {% endblock %}

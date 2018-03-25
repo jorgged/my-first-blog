@@ -1,0 +1,10 @@
+{% extends 'Base.html' %}
+
+{% block content %}
+{% for item in object_list %}
+    <p>{{ item.student_exp }}</p>
+    <p>{{ item.student_name }}</p>
+    <p>{{ item.seccion_id }}</p>
+{% endfor %}
+
+{% endblock %}

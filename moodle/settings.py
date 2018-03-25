@@ -119,6 +119,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
+STATIC_URL = '/static/'
+STATIC_DIRS = os.path.join(BASE_DIR, 'static')
 AUTH_USER_MODEL = 'core.Person'
 AUTHENTICATION_BACKENDS = ('core.Backend.UserAuthentificacionBackend',)
-STATIC_URL = '/static/'
+

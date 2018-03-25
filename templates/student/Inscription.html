@@ -1,0 +1,57 @@
+{% extends "Base.html" %}
+{% load static %}
+
+
+
+{% block content %}
+    <table class="table" id="course-table">
+        <thead>
+        <tr>
+            <th scope="col">Cupos</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Codigo</th>
+            <th scope="col">Seccion</th>
+            <th scope="col">Seleccion</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% include 'student/includes/courses_list.html' %}
+        </tbody>
+    </table>
+
+
+    <script>
+        $(function () {
+            var InscriptionBtn = function () {
+            var btn = $(this);
+            $.ajax({
+                url: btn.attr("data_url"),
+                data: btn.attr("data_course"),
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.inscrito) {
+                        $("#course-table tbody").html(data.html_courses_list);
+                        //$("#modal-book").modal("hide");
+                        alert("ok");
+                    }
+                    else {
+                        //$("#modal-book .modal-content").html(data.html_form);
+                        alert("algo paso");
+                    }
+                }
+            });
+            return false;
+        };
+            $(".js-inscription").click(InscriptionBtn);
+    });
+
+
+
+    </script>
+
+
+
+
+
+{% endblock %}

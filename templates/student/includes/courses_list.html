@@ -1,0 +1,9 @@
+{% for materia in object_list %}
+    <tr>
+        <th id="{{ materia.code }}" scope="row">{{ materia.seats }}</th>
+        <td>{{ materia.name }}</td>
+        <td>{{ materia.code }}</td>
+        <td>{{ materia.seccion }}</td>
+        <td><button type="button" data_url="{% url 'core:inscribir' materia.code %}" data_course="{{ materia.code }}" class="btn btn-success js-inscription"><span class="glyphicon glyphicon-plus"></span></button></td>
+    </tr>
+{% endfor %}

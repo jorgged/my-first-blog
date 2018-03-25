@@ -1,0 +1,26 @@
+{% extends "Base.html" %}
+{% load staticfiles %}
+
+
+{% block content %}
+    <br>
+{{ data }}
+    {% for d in data %}
+        <p>{{ d.first_name }}</p><br>
+    {% endfor %}
+    <div id="app">
+        <p>[[{{ info }} info ]]</p>
+    </div>
+
+    <script type=”text/javascript”>
+        new Vue({
+            delimiters:['$[',']'],
+            el:'#app',
+            data:{
+                info:'hola',
+            }
+        })
+
+    </script>
+
+{% endblock %}

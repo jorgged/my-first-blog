@@ -1,19 +1,20 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <nav>Barra de direcciones</nav>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-<a href="{% url 'core:home' %}">Home</a>
-<a href="{% url 'core:new_course' %}">Nuevo Curso</a>
-<a href="{% url 'core:new_seccion' %}">Nueva Sección</a>
-<a href="{% url 'core:new_student' %}">Nuevo Estudiante</a>
-<a href="{% url 'core:new_teacher' %}">Nuevo Profesor</a>
-
-<br>
+{% include 'Menu.html' %}
 {% block content %}
 {% endblock %}
 </body>
+
 </html>

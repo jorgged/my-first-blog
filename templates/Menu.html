@@ -1,0 +1,19 @@
+{% if user.is_authenticated %}
+<a href="{% url 'core:home' %}">Home</a>
+{% endif %}
+
+
+{% if user.type_user == 'teacher' %}
+    <a href="{% url 'core:new_teacher' %}">Nuevo Profesor</a>
+    <a href="{% url 'core:new_student' %}">Nuevo Estudiante</a>
+    <a href="{% url 'core:new_course' %}">Nuevo Curso</a>
+{% endif %}
+{% if user.type_user == 'student' %}
+    <a href="{% url 'core:inscription' %}">Inscripción</a>
+    <a href="{% url 'core:listcourses' %}">Mis materias</a>
+
+{% endif %}
+{% if user.is_authenticated %}
+    <a href="#">Usuario: {{ user.first_name }}</a>
+    <a href="{% url 'core:logout' %}">Cerrar sesion</a>
+{% endif %}

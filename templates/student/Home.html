@@ -1,17 +1,8 @@
 {% extends "Base.html" %}
 
 {% block content %}
-    <p>Lista de estudiantes</p>
-    <il>
-        {% for student in students %}
-            <ul>
-                {{ student.exp }}
-                {{ student.dni }}
-                {{ student.name }}
-                {{ student.last_name }}
-            </ul>
-        {% endfor %}
-    </il>
-
+{% for item in object_list %}
+    <p>{{ item }}</p>
+{% endfor %}
 
 {% endblock %}

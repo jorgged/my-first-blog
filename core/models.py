@@ -1,6 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-
+from django.contrib.auth.models import AbstractUser, User
 
 
 class Person(AbstractUser):
@@ -21,7 +20,6 @@ class Person(AbstractUser):
     type_user = models.CharField(max_length=30, choices=type_user_options)
 
 
-
 class Teacher(models.Model):
     exp = models.CharField(max_length=30)  # username para el login
     name = models.CharField(max_length=30)
@@ -39,7 +37,6 @@ class Teacher(models.Model):
 
     def __str__(self):
         return self.name, self.last_name
-
 
 
 class Student(models.Model):
@@ -66,26 +63,21 @@ class Student(models.Model):
 class Course(models.Model):
     code = models.CharField(primary_key=True, max_length=100)
     name = models.CharField(max_length=500)
+    seccion = models.CharField(max_length=30)
+    period = models.CharField(max_length=100)
+    teacher_exp = models.ForeignKey(Person, on_delete=models.PROTECT)
+    teacher_name = models.CharField(max_length=30)
+    teacher_last_name = models.CharField(max_length=30)
+    seats = models.IntegerField()
+
 
     def __str__(self):
-        texto = self.code+'_'+ self.name
+        texto = self.code + '_' + self.name
         return texto
 
 
-class Seccion(models.Model):
-    course = models.ForeignKey(Course,on_delete=models.PROTECT)
-    code = models.CharField(max_length=100)
-    period = models.CharField(max_length=100)
-    teacher_exp = models.CharField(max_length=30)
-    teacher_name = models.CharField(max_length=30)
-    teacher_last_name = models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.code
-
-
-class student_inscription(models.Model):
-    seccion = models.ForeignKey(Seccion,models.PROTECT)
+class Student_inscription(models.Model):
+    seccion = models.ForeignKey(Course, models.PROTECT)
     student_exp = models.CharField(max_length=30)
     student_name = models.CharField(max_length=30)
 
